@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kelulusan SDS JAI NALANDA</title>
+  <style>
+    /* Modern and clean style */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #4a90e2, #50e3c2);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 40px 30px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-weight: 600;
+      font-size: 1.8rem;
+      letter-spacing: 1.2px;
+      user-select: none;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: none;
+      font-size: 1rem;
+      box-sizing: border-box;
+      font-weight: 500;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+      color: #333;
+    }
+
+    input[type="text"]:focus {
+      box-shadow: 0 0 8px 2px #50e3c2;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      background: #fff;
+      color: #4a90e2;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 14px 0;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+    }
+
+    button:hover {
+      background-color: #3a7bd5;
+      color: #fff;
+    }
+
+    .result {
+      margin-top: 30px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      padding: 16px;
+      border-radius: 14px;
+      user-select: none;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lulus {
+      background-color: #27ae60;
+      box-shadow: 0 4px 10px rgba(39, 174, 96, 0.6);
+      color: #ecf0f1;
+    }
+
+    .tidak-lulus {
+      background-color: #c0392b;
+      box-shadow: 0 4px 10px rgba(192, 57, 43, 0.6);
+      color: #ecf0f1;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.75rem;
+      color: #d1e8e2;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-label="Aplikasi Cek Kelulusan SDS JAI NALANDA">
+    <h1>KELULUSAN PESERTA DIDIK SDS JAI NALANDA</h1>
+    <input type="text" id="studentName" aria-label="Masukkan nama siswa" placeholder="Masukkan nama anak..." />
+    <button id="checkBtn" aria-describedby="resultMessage">Cek Kelulusan</button>
+    <div id="resultMessage" class="result" role="status" aria-live="polite"></div>
+    <footer>Cek kelulusan</footer>
+  </div>
+
+  <script>
+    (function() {
+      const passList = [
+        "Alexander Jonathan",
+        "Fadil Wijaya",
+        "Grant Eryanson Lim",
+        "Jason Felix Adrian",
+        "Jonathan Joveya",
+        "Lionel Malvino Natanael",
+        "Mackenzie Lucky Tan",
+        "Tiffany Clarissa",
+        "Vincent Ozora Kusuma"
+        
+      ];
+
+      const input = document.getElementById('studentName');
+      const resultDiv = document.getElementById('resultMessage');
+      const checkBtn = document.getElementById('checkBtn');
+
+      function normalizeName(name) {
+        return name.trim().toLowerCase();
+      }
+
+      function isPassed(name) {
+        // check if normalized name is in passList (case-insensitive)
+        return passList.some(passedName => normalizeName(passedName) === normalizeName(name));
+      }
+
+      function showResult(text, isPass) {
+        resultDiv.textContent = text;
+        if (isPass === true) {
+          resultDiv.classList.remove('tidak-lulus');
+          resultDiv.classList.add('lulus');
+        } else if (isPass === false) {
+          resultDiv.classList.remove('lulus');
+          resultDiv.classList.add('tidak-lulus');
+        } else {
+          resultDiv.classList.remove('lulus', 'tidak-lulus');
+        }
+      }
+
+      checkBtn.addEventListener('click', function() {
+        const name = input.value;
+        if (!name.trim()) {
+          showResult('Mohon masukkan nama anak.', null);
+          return;
+        }
+
+        if (isPassed(name)) {
+          showResult(`Selamat, ${name} dinyatakan LULUS! 🎉`, true);
+        } else {
+          showResult(`Maaf, ${name} dinyatakan TIDAK LULUS.`, false);
+        }
+      });
+
+      // Support enter key press in input field
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          checkBtn.click();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+
